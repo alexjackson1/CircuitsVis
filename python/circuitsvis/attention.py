@@ -2,12 +2,11 @@
 from typing import List, Optional, Union
 
 import numpy as np
-import torch
 from circuitsvis.utils.render import RenderedHTML, render
 
 
 def attention_heads(
-    attention: Union[list, np.ndarray, torch.Tensor],
+    attention: Union[list, np.ndarray],
     tokens: List[str],
     attention_head_names: Optional[List[str]] = None,
     max_value: Optional[float] = None,
@@ -56,15 +55,12 @@ def attention_heads(
         "maskUpperTri": mask_upper_tri,
     }
 
-    return render(
-        "AttentionHeads",
-        **kwargs
-    )
+    return render("AttentionHeads", **kwargs)
 
 
 def attention_patterns(
     tokens: List[str],
-    attention: Union[list, np.ndarray, torch.Tensor],
+    attention: Union[list, np.ndarray],
 ) -> RenderedHTML:
     """Attention Patterns
 
@@ -89,7 +85,7 @@ def attention_patterns(
 
 def attention_pattern(
     tokens: List[str],
-    attention: Union[list, np.ndarray, torch.Tensor],
+    attention: Union[list, np.ndarray],
     max_value: Optional[float] = None,
     min_value: Optional[float] = None,
     negative_color: Optional[str] = None,
@@ -136,7 +132,4 @@ def attention_pattern(
         "maskUpperTri": mask_upper_tri,
     }
 
-    return render(
-        "AttentionPattern",
-        **kwargs
-    )
+    return render("AttentionPattern", **kwargs)

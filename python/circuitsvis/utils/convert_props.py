@@ -3,14 +3,12 @@ import json
 from typing import Union, Dict
 
 import numpy as np
-import torch
 
 PythonProperty = Union[
     dict,
     list,
     None,
     np.ndarray,
-    torch.Tensor,
     bool,
     float,
     int,
@@ -40,9 +38,7 @@ def convert_prop_type(prop: PythonProperty) -> JavaScriptProperty:
     Returns:
         Union[str, int, float, bool]: JavaScript safe property
     """
-    if isinstance(prop, torch.Tensor):
-        return prop.tolist()
-    if isinstance(prop, np.ndarray):
+    if isinstance(prop, np.ndarray) or "shape" in dir(prop):
         return prop.tolist()
 
     return prop

@@ -1,10 +1,8 @@
-import torch
 from circuitsvis.utils.convert_props import convert_prop_type
 import numpy as np
 
 
 class TestConvertPropType:
-
     def test_dict(self):
         res = convert_prop_type({"a": 1})
         assert res == {"a": 1}
@@ -19,10 +17,6 @@ class TestConvertPropType:
 
     def test_ndarray(self):
         res = convert_prop_type(np.array([1, 2, 3]))
-        assert res == [1, 2, 3]
-
-    def test_tensor(self):
-        res = convert_prop_type(torch.Tensor([1, 2, 3]))
         assert res == [1, 2, 3]
 
     def test_bool(self):

@@ -1,5 +1,5 @@
 """CircuitsVis"""
-from importlib_metadata import version
+# from importlib_metadata import version
 import circuitsvis.activations
 import circuitsvis.attention
 import circuitsvis.examples
@@ -8,7 +8,7 @@ import circuitsvis.topk_samples
 import circuitsvis.topk_tokens
 import circuitsvis.logits
 
-__version__ = version("circuitsvis")
+__version__ = "0.0.0"
 
 __all__ = [
     "activations",

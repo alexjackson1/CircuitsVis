@@ -1,6 +1,5 @@
 {
   "rewrap.autoWrap.enabled": true,
-  "eslint.packageManager": "yarn",
   "eslint.workingDirectories": [
     {
       "mode": "auto"
@@ -31,5 +30,11 @@
   "python.linting.pylintArgs": [
     "--rcfile=./python/.pylintrc",
     "--generated-members=numpy.* ,torch.* ,cv2.* , cv.*"
-  ]
+  ],
+  "python.testing.pytestArgs": [
+    "python/circuitsvis/tests",
+    "python/circuitsvis/utils/tests"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true
 }

@@ -1,7 +1,24 @@
 from typing import List, Optional
 from circuitsvis.utils.render import RenderedHTML, render
 import numpy as np
-import torch
+
+
+def torch_topk(x: np.ndarray, k: int, dim: int, largest: bool = True):
+    # Find the indices of the top k values along axis 1
+    topk_idxs = np.argpartition(x, -k, axis=dim)[:, -k:]
+
+    # Sort the indices to get the top k indices
+    topk_idxs = np.argsort(topk_idxs, axis=dim)
+
+    # Extract the top k values
+    topk_vals = np.take_along_axis(x, topk_idxs, axis=dim)
+
+    # If you want the results in descending order, reverse the order
+    if largest:
+        topk_vals = topk_vals[:, ::-1]
+        topk_idxs = topk_idxs[:, ::-1]
+
+    return topk_vals, topk_idxs
 
 
 def topk_tokens(
@@ -49,19 +66,17 @@ def topk_tokens(
     bottomk_idxs = []
     for sample_acts in activations:
         # get topk tokens for each object
-        sample_acts_tensor = torch.from_numpy(sample_acts)
         # Set max_k to the min of the number of tokens and the max_k
-        k = min(sample_acts_tensor.shape[1], max_k)
-
-        sample_topk_vals, sample_topk_idxs = sample_acts_tensor.topk(k=k, dim=1)
+        k = min(sample_acts.shape[1], max_k)
+        sample_topk_vals, sample_topk_idxs = torch_topk(sample_acts, k, dim=1)
         # also get bottom k vals
-        sample_bottomk_vals, sample_bottomk_idxs = sample_acts_tensor.topk(
-            k=k, dim=1, largest=False
+        sample_bottomk_vals, sample_bottomk_idxs = torch_topk(
+            sample_acts, k, dim=1, largest=False
         )
 
         # reverse sort order of bottomk vals and idxs
-        sample_bottomk_vals = sample_bottomk_vals.flip(dims=(1,))
-        sample_bottomk_idxs = sample_bottomk_idxs.flip(dims=(1,))
+        sample_bottomk_vals = sample_bottomk_vals[:, ::-1]
+        sample_bottomk_idxs = sample_bottomk_idxs[:, ::-1]
 
         topk_vals.append(sample_topk_vals.tolist())
         topk_idxs.append(sample_topk_idxs.tolist())

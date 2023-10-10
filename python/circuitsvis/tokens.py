@@ -2,18 +2,17 @@
 from typing import List, Optional, Union
 
 import numpy as np
-import torch
 from circuitsvis.utils.render import RenderedHTML, render
 
-ArrayRank1 = Union[List[float], np.ndarray, torch.Tensor]
-ArrayRank2 = Union[List[List[float]], np.ndarray, torch.Tensor]
-ArrayRank3 = Union[List[List[List[float]]], np.ndarray, torch.Tensor]
-IntArrayRank1 = Union[List[int], np.ndarray, torch.Tensor]
+ArrayRank1 = Union[List[float], np.ndarray]
+ArrayRank2 = Union[List[List[float]], np.ndarray]
+ArrayRank3 = Union[List[List[List[float]]], np.ndarray]
+IntArrayRank1 = Union[List[int], np.ndarray]
 
 
 def colored_tokens(
     tokens: List[str],
-    values: Union[List[float], np.ndarray, torch.Tensor],
+    values: Union[List[float], np.ndarray],
     min_value: Optional[float] = None,
     max_value: Optional[float] = None,
     negative_color: Optional[str] = None,
@@ -49,7 +48,7 @@ def colored_tokens(
 
 def colored_tokens_multi(
     tokens: List[str],
-    values: torch.Tensor,
+    values: np.ndarray,
     labels: Optional[List[str]] = None,
 ) -> RenderedHTML:
     """Shows a sequence of tokens colored by their value. 
@@ -88,15 +87,15 @@ def colored_tokens_multi(
 
 
 def visualize_model_performance(
-    tokens: torch.Tensor,
+    tokens: np.ndarray,
     str_tokens: List[str],
-    logits: torch.Tensor,
+    logits: np.ndarray,
 ):
     """Visualizes model performance on some text
 
     Shows logits, log probs, and probabilities for predicting each token (from
     the previous tokens), colors the tokens according to one of logits, log
-    probs and probabilities, according to user input. 
+    probs and probabilities, according to user input.
 
     Allows the user to enter custom bounds for the values (eg, saturate color of
     probability at 0.01)
@@ -118,7 +117,7 @@ def visualize_model_performance(
     logits = logits[:-1]
     log_probs = logits.log_softmax(dim=-1)
     probs = logits.softmax(dim=-1)
-    values = torch.stack([
+    values = np.stack([
         logits.gather(-1, tokens[1:, None])[:, 0],
         log_probs.gather(-1, tokens[1:, None])[:, 0],
         probs.gather(-1, tokens[1:, None])[:, 0],

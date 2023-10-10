@@ -1,14 +1,14 @@
 """Activations visualizations"""
-from typing import List, Union, Optional
+from typing import Any, List, Union, Optional
 
 import numpy as np
-import torch
+
 from circuitsvis.utils.render import RenderedHTML, render
 
 
 def text_neuron_activations(
     tokens: Union[List[str], List[List[str]]],
-    activations: Union[np.ndarray, torch.Tensor, List[np.ndarray], List[torch.Tensor]],
+    activations: Union[np.ndarray, List[np.ndarray]],
     first_dimension_name: Optional[str] = "Layer",
     second_dimension_name: Optional[str] = "Neuron",
     first_dimension_labels: Optional[List[str]] = None,
@@ -29,7 +29,7 @@ def text_neuron_activations(
     """
     # Verify that activations and tokens have the right shape and convert to
     # nested lists
-    if isinstance(activations, (np.ndarray, torch.Tensor)):
+    if isinstance(activations, np.ndarray) or "shape" in dir(activations):
         assert (
             activations.ndim == 3
         ), "activations must be of shape [tokens x layers x neurons]"

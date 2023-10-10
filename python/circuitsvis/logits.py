@@ -2,18 +2,17 @@
 from typing import Callable, List, Union
 
 import numpy as np
-import torch
 from circuitsvis.utils.render import RenderedHTML, render
 
-ArrayRank1 = Union[List[float], np.ndarray, torch.Tensor]
-ArrayRank2 = Union[List[List[float]], np.ndarray, torch.Tensor]
-ArrayRank3 = Union[List[List[List[float]]], np.ndarray, torch.Tensor]
-IntArrayRank1 = Union[List[int], np.ndarray, torch.Tensor]
+ArrayRank1 = Union[List[float], np.ndarray]
+ArrayRank2 = Union[List[List[float]], np.ndarray]
+ArrayRank3 = Union[List[List[List[float]]], np.ndarray]
+IntArrayRank1 = Union[List[int], np.ndarray]
 
 
 def token_log_probs(
-    token_indices: torch.Tensor,
-    log_probs: torch.Tensor,
+    token_indices: np.ndarray,
+    log_probs: np.ndarray,
     to_string: Callable[[int], str],
     top_k: int = 10,
 ) -> RenderedHTML:
