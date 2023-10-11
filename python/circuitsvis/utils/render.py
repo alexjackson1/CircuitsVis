@@ -59,7 +59,8 @@ class RenderedHTML:
             return self.local_src
 
         # Otherwise use the CDN
-        return self.cdn_src
+        # return self.cdn_src
+        return self.local_src
 
     def __html__(self) -> str:
         """Used by some tooling as an alternative to _repr_html_"""
@@ -89,11 +90,7 @@ def install_if_necessary() -> None:
     node_modules = REACT_DIR / "node_modules"
     if not node_modules.exists():
         subprocess.run(
-            ["yarn"],
-            cwd=REACT_DIR,
-            capture_output=True,
-            text=True,
-            check=True
+            ["yarn"], cwd=REACT_DIR, capture_output=True, text=True, check=True
         )
 
 
@@ -112,12 +109,9 @@ def bundle_source(dev_mode: bool = True) -> None:
     if dev_mode:
         build_command.append("--dev")
 
-    subprocess.run(build_command,
-                   cwd=REACT_DIR,
-                   capture_output=True,
-                   text=True,
-                   check=True
-                   )
+    subprocess.run(
+        build_command, cwd=REACT_DIR, capture_output=True, text=True, check=True
+    )
 
     # Copy files to python dist directory (overwriting any existing files)
     react_dist = REACT_DIR / "dist"
@@ -195,10 +189,7 @@ def render_cdn(react_element_name: str, **kwargs: PythonProperty) -> str:
     return html
 
 
-def render(
-    react_element_name: str,
-    **kwargs: PythonProperty
-) -> RenderedHTML:
+def render(react_element_name: str, **kwargs: PythonProperty) -> RenderedHTML:
     """Render a visualization to HTML
 
     This will show the visualization in Jupyter Lab/Colab by default, and show a
