@@ -1,28 +1,27 @@
-# CircuitsVis
+# CircuitsVis without PyTorch
 
-[![Release](https://github.com/alan-cooney/CircuitsVis/actions/workflows/release.yml/badge.svg)](https://github.com/alan-cooney/CircuitsVis/actions/workflows/release.yml)
-[![NPMJS](https://img.shields.io/npm/v/circuitsvis)](https://www.npmjs.com/package/circuitsvis)
-[![Pypi](https://img.shields.io/pypi/v/circuitsvis)](https://pypi.org/project/circuitsvis/)
+***This is a fork of [CircuitsVis](https://github.com/alan-cooney/CircuitsVis) (developed by Alan Cooney) with the PyTorch dependency removed.
+This is useful for projects not using PyTorch, where CircuitsVis visualizations are still desired.***
 
 Mechanistic Interpretability visualizations, that work both in both Python (e.g. with
 [Jupyter Lab](https://jupyter.org/)) and JavaScript (e.g. [React](https://reactjs.org/) or plain HTML).
 
 View them all at https://alan-cooney.github.io/CircuitsVis
 
-## Use
+## Module Usage
 
 ### Install
 
 #### Python
 
 ```bash
-pip install circuitsvis
+pip install "git+https://github.com/alexjackson1/CircuitsVis.git@main#egg=circuitsvis"
 ```
 
 #### React
 
 ```bash
-yarn add circuitsvis
+yarn add "https://github.com/alexjackson1/CircuitsVis.git#main"
 ```
 
 ### Add visualizations
@@ -50,7 +49,7 @@ function Example() {
 }
 ```
 
-## Contribute
+## Developer Usage
 
 ### Development requirements
 
